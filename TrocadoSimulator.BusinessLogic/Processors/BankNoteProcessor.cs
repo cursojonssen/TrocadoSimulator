@@ -11,7 +11,7 @@ namespace TrocadoSimulator.BusinessLogic.Processors {
 
             if (amountInCents < 200) { return new List<ChangeData>(); }
 
-            List<ChangeData> changeInBankNotesCollection = new List<ChangeData>();
+            List<ChangeData> changeCollection = new List<ChangeData>();
 
             int[] availableValues = this.AvailableValues();
 
@@ -24,12 +24,12 @@ namespace TrocadoSimulator.BusinessLogic.Processors {
                 while (changeItem <= amountInCents) {
                     //Se o troco restante for zero, retorna o valor
                     if (amountInCents < 200) {
-                        return changeInBankNotesCollection;
+                        return changeCollection;
                     }
                     //Recupera o item a ser adicionado na lista, caso já esteja apenas incrementa.
-                    ChangeData changeInBankNotes = changeInBankNotesCollection.SingleOrDefault(o => o.AmountInCents == changeItem);
+                    ChangeData changeInBankNotes = changeCollection.SingleOrDefault(o => o.AmountInCents == changeItem);
                     if (changeInBankNotes == null) {
-                        changeInBankNotesCollection.Add(new ChangeData(changeItem, "cédula"));
+                        changeCollection.Add(new ChangeData(changeItem, "cédula"));
                     }
                     else {
                         changeInBankNotes.Quantity++;
@@ -37,7 +37,7 @@ namespace TrocadoSimulator.BusinessLogic.Processors {
                     amountInCents = amountInCents - changeItem;
                 }
             }
-            return changeInBankNotesCollection;
+            return changeCollection;
         }
 
         /// <summary>
